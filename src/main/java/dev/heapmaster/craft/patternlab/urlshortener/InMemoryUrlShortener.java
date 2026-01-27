@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * A simple URL shortener service that encodes long URLs into short URLs and decodes them back.
  * It uses Base62 encoding for generating short URL paths.
  */
-public class UrlShortener {
+public class InMemoryUrlShortener {
 
   /**
    * The length of the generated short URL path.
@@ -132,7 +132,7 @@ public class UrlShortener {
   }
 
   public static void main(String[] args) {
-    UrlShortener urlShortener = new UrlShortener();
+    InMemoryUrlShortener urlShortener = new InMemoryUrlShortener();
     String longUrl = "https://www.example.com/some/very/long/path";
     String shortUrl = urlShortener.encode(longUrl);
     System.out.println("Shortened URL: " + shortUrl);

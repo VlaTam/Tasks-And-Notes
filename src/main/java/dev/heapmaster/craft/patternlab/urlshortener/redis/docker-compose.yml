@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - C:\Users\A106036579\projects\redis_data:/data
+    command: redis-server --appendonly yes  # persistent
+
+  redis-commander:  # 🔥 UI клиент
+    image: rediscommander/redis-commander:latest
+    container_name: commander
+    restart: always
+    ports:
+      - "8091:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:masterpass
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
