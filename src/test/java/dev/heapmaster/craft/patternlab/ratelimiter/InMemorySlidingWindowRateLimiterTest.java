@@ -9,7 +9,7 @@ import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SlidingWindowRateLimiterTest {
+class InMemorySlidingWindowRateLimiterTest {
 
   private static final int MAX_REQUESTS = 5;
   private static final int WINDOW_SIZE_SECONDS = 10;
@@ -19,7 +19,7 @@ class SlidingWindowRateLimiterTest {
   @BeforeEach
   void init() {
     clock = new MutableClock(Instant.now());
-    rateLimiter = new SlidingWindowRateLimiter(MAX_REQUESTS, WINDOW_SIZE_SECONDS, clock);
+    rateLimiter = new InMemorySlidingWindowRateLimiter(MAX_REQUESTS, WINDOW_SIZE_SECONDS, clock);
   }
 
   @Test

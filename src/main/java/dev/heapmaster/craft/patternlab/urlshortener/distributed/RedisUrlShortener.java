@@ -1,4 +1,4 @@
-package dev.heapmaster.craft.patternlab.urlshortener.redis;
+package dev.heapmaster.craft.patternlab.urlshortener.distributed;
 
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;

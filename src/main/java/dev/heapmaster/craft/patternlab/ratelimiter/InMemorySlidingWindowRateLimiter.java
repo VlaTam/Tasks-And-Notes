@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class SlidingWindowRateLimiter implements RateLimiter, AutoCloseable {
+public class InMemorySlidingWindowRateLimiter implements RateLimiter, AutoCloseable {
 
   private static final int CLEANUP_INTERVAL_SECONDS = 60;
   private final int maxRequests;
@@ -22,7 +22,7 @@ public class SlidingWindowRateLimiter implements RateLimiter, AutoCloseable {
   private final Clock clock;
   private final ScheduledExecutorService scheduler;
 
-  public SlidingWindowRateLimiter(int maxRequests, int windowSizeInSeconds, Clock clock) {
+  public InMemorySlidingWindowRateLimiter(int maxRequests, int windowSizeInSeconds, Clock clock) {
     this.maxRequests = maxRequests;
     this.windowSizeInSeconds = windowSizeInSeconds;
     this.userRequestTimestamps = new ConcurrentHashMap<>();
