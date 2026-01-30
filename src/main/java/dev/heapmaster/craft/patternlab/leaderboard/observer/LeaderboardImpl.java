@@ -1,6 +1,8 @@
 package dev.heapmaster.craft.patternlab.leaderboard.observer;
 
 import dev.heapmaster.craft.patternlab.leaderboard.Leaderboard;
+import dev.heapmaster.craft.patternlab.leaderboard.UserScoreObserver;
+import dev.heapmaster.craft.patternlab.leaderboard.UserScoreStore;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ import java.util.List;
  * @see InMemoryUserScoreStore
  * @see InMemoryUserScoreObserver
  */
-public class ObserverLeaderboard implements Leaderboard {
+public class LeaderboardImpl implements Leaderboard {
 
   private final UserScoreObserver observer;
   private final UserScoreStore userScores;
@@ -33,7 +35,7 @@ public class ObserverLeaderboard implements Leaderboard {
    *
    * @param maxEntries the maximum number of user entries allowed in the leaderboard
    */
-  public ObserverLeaderboard(int maxEntries) {
+  public LeaderboardImpl(int maxEntries) {
     this.observer = new InMemoryUserScoreObserver();
     this.userScores = new InMemoryUserScoreStore(maxEntries, List.of(observer));
   }

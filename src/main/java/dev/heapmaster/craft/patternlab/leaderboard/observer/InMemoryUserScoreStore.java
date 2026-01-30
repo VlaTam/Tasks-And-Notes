@@ -1,10 +1,14 @@
 package dev.heapmaster.craft.patternlab.leaderboard.observer;
 
+import dev.heapmaster.craft.patternlab.leaderboard.UserScoreObserver;
+import dev.heapmaster.craft.patternlab.leaderboard.UserScoreStore;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -32,6 +36,7 @@ public class InMemoryUserScoreStore implements UserScoreStore {
   private final int maxEntries;
   private final Map<String, Integer> userScores;
   private final List<UserScoreObserver> observers;
+  private final ExecutorService executor;
 
   /**
    * Constructs a new {@code InMemoryUserScoreStore} with the specified maximum capacity and observers.
@@ -43,6 +48,7 @@ public class InMemoryUserScoreStore implements UserScoreStore {
     this.maxEntries = maxEntries;
     this.userScores = new ConcurrentHashMap<>();
     this.observers = observers;
+    this.executor = Executors.newFixedThreadPool(4);
   }
 
   /**
@@ -73,7 +79,7 @@ public class InMemoryUserScoreStore implements UserScoreStore {
       }
       var oldScore = score == null ? 0: score;
       var newScore = oldScore + delta;
-      CompletableFuture.runAsync(() -> notifyObservers(userId, oldScore, newScore), Executors.newFixedThreadPool(4));
+      CompletableFuture.runAsync(() -> notifyObservers(userId, oldScore, newScore), executor);
       return newScore;
     });
   }
@@ -86,6 +92,6 @@ public class InMemoryUserScoreStore implements UserScoreStore {
    * @param newScore the new score value
    */
   private void notifyObservers(String userId, int oldScore, int newScore) {
-    observers.forEach(observer -> observer.notify(userId, oldScore, newScore));
+    observers.forEach(observer -> observer.update(userId, oldScore, newScore));
   }
 }

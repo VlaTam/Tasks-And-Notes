@@ -1,5 +1,7 @@
 package dev.heapmaster.craft.patternlab.leaderboard.observer;
 
+import dev.heapmaster.craft.patternlab.leaderboard.UserScoreObserver;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -12,7 +14,7 @@ import java.util.TreeSet;
  * When scores are equal, users are sorted alphabetically by their user ID.
  * </p>
  * <p>
- * This implementation is thread-safe for the {@link #notify(String, int, int)} method.
+ * This implementation is thread-safe for the {@link #update(String, int, int)} method.
  * </p>
  *
  * @see UserScoreObserver
@@ -36,7 +38,7 @@ public class InMemoryUserScoreObserver implements UserScoreObserver {
    * </p>
    */
   @Override
-  public synchronized void notify(String userId, int oldScore, int newScore) {
+  public synchronized void update(String userId, int oldScore, int newScore) {
     userScores.remove(new UserScore(userId, oldScore));
     userScores.add(new UserScore(userId, newScore));
   }

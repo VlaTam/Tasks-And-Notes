@@ -1,4 +1,4 @@
-package dev.heapmaster.craft.patternlab.leaderboard.observer;
+package dev.heapmaster.craft.patternlab.leaderboard;
 
 public interface UserScoreStore {
 
